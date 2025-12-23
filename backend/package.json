@@ -1,0 +1,61 @@
+{
+    "name": "jotter-backend",
+    "version": "1.0.0",
+    "description": "Backend API for Jotter - A Storage Management System",
+    "main": "dist/server.js",
+    "scripts": {
+        "dev": "nodemon --exec ts-node src/server.ts",
+        "build": "tsc",
+        "start": "node dist/server.js",
+        "lint": "eslint src/**/*.ts",
+        "docker:up": "docker-compose up -d",
+        "docker:down": "docker-compose down"
+    },
+    "keywords": [
+        "jotter",
+        "storage",
+        "file-management",
+        "nodejs",
+        "typescript",
+        "express",
+        "mongodb"
+    ],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@types/cookie-parser": "^1.4.10",
+        "bcryptjs": "^3.0.3",
+        "cloudinary": "^2.8.0",
+        "cookie-parser": "^1.4.7",
+        "cors": "^2.8.5",
+        "dotenv": "^17.2.3",
+        "express": "^5.2.1",
+        "express-rate-limit": "^8.2.1",
+        "express-validator": "^7.3.1",
+        "helmet": "^8.1.0",
+        "jsonwebtoken": "^9.0.3",
+        "mongoose": "^9.0.2",
+        "multer": "^2.0.2",
+        "nodemailer": "^7.0.12",
+        "passport": "^0.7.0",
+        "passport-google-oauth20": "^2.0.0",
+        "resend": "^6.6.0",
+        "zod": "^4.2.1"
+    },
+    "devDependencies": {
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.6",
+        "@types/jsonwebtoken": "^9.0.10",
+        "@types/multer": "^2.0.0",
+        "@types/node": "^25.0.3",
+        "@types/nodemailer": "^7.0.4",
+        "@types/passport": "^1.0.17",
+        "@types/passport-google-oauth20": "^2.0.17",
+        "@typescript-eslint/eslint-plugin": "^8.50.1",
+        "@typescript-eslint/parser": "^8.50.1",
+        "eslint": "^9.39.2",
+        "nodemon": "^3.1.11",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.9.3"
+    }
+}

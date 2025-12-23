@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Test coverage
+coverage/
+
+# Temporary files
+tmp/
+temp/
+
+# Uploaded files (if stored locally during dev)
+uploads/
+
+# TypeScript (Critical for incremental builds)
+*.tsbuildinfo
+
+# Docker (If you ever mount data locally instead of named volumes)
+.docker/
+mongo-data/
+
+# Package Manager Logs (In case you or a teammate use Yarn/pnpm)
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Testing
+.nyc_output/
+
+# Mac OS (Better coverage)
+.AppleDouble
+.LSOverride
+._*
