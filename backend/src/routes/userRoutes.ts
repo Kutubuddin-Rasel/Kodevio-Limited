@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
 import * as userController from '../controllers/userController';
-import { authenticate, validate } from '../middleware';
+import { authenticate, validate, uploadImages } from '../middleware';
 
 const router = Router();
 router.use(authenticate);
@@ -19,6 +19,8 @@ const changePasswordValidation = [
 
 router.get('/profile', userController.getProfile);
 router.put('/profile', validate(updateProfileValidation), userController.updateProfile);
+router.post('/avatar', uploadImages.single('avatar'), userController.uploadAvatar);
+router.delete('/avatar', userController.deleteAvatar);
 router.put('/change-password', validate(changePasswordValidation), userController.changePassword);
 router.delete('/account', userController.deleteAccount);
 

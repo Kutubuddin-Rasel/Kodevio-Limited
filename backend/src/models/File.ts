@@ -105,6 +105,7 @@ interface IFileModel extends Model<IFileDocument> {
     findRecent(userId: Types.ObjectId, limit?: number): Promise<IFileDocument[]>;
     calculateStorageByType(userId: Types.ObjectId): Promise<{ images: { count: number; size: number }; pdfs: { count: number; size: number } }>;
     calculateTotalStorage(userId: Types.ObjectId): Promise<number>;
+    calculateStorageInFolders(userId: Types.ObjectId): Promise<number>;
 }
 
 fileSchema.statics.findByUserAndParent = function (
@@ -149,6 +150,14 @@ fileSchema.statics.calculateStorageByType = async function (
 fileSchema.statics.calculateTotalStorage = async function (userId: Types.ObjectId): Promise<number> {
     const result = await this.aggregate([
         { $match: { userId: new mongoose.Types.ObjectId(userId) } },
+        { $group: { _id: null, totalSize: { $sum: '$size' } } },
+    ]);
+    return result.length > 0 ? result[0].totalSize : 0;
+};
+
+fileSchema.statics.calculateStorageInFolders = async function (userId: Types.ObjectId): Promise<number> {
+    const result = await this.aggregate([
+        { $match: { userId: new mongoose.Types.ObjectId(userId), parentId: { $ne: null } } },
         { $group: { _id: null, totalSize: { $sum: '$size' } } },
     ]);
     return result.length > 0 ? result[0].totalSize : 0;

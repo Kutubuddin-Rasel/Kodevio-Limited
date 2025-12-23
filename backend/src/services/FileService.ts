@@ -156,7 +156,6 @@ class FileService {
         const files = await File.find({ userId, parentId: { $in: folderIds } });
         const totalSize = files.reduce((sum, file) => sum + file.size, 0);
 
-        // TODO: Bulk delete from Cloudinary
         await File.deleteMany({ userId, parentId: { $in: folderIds } });
 
         if (totalSize > 0) {

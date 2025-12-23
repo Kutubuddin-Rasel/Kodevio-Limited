@@ -71,6 +71,7 @@ interface INoteModel extends Model<INoteDocument> {
     findRecent(userId: Types.ObjectId, limit?: number): Promise<INoteDocument[]>;
     searchNotes(userId: Types.ObjectId, query: string): Promise<INoteDocument[]>;
     countByUser(userId: Types.ObjectId): Promise<number>;
+    calculateTotalContentSize(userId: Types.ObjectId): Promise<{ count: number; size: number }>;
 }
 
 noteSchema.statics.findByUserAndParent = function (
@@ -94,6 +95,22 @@ noteSchema.statics.searchNotes = function (userId: Types.ObjectId, query: string
 
 noteSchema.statics.countByUser = function (userId: Types.ObjectId): Promise<number> {
     return this.countDocuments({ userId });
+};
+
+noteSchema.statics.calculateTotalContentSize = async function (
+    userId: Types.ObjectId
+): Promise<{ count: number; size: number }> {
+    const result = await this.aggregate([
+        { $match: { userId: new mongoose.Types.ObjectId(userId) } },
+        {
+            $group: {
+                _id: null,
+                count: { $sum: 1 },
+                totalSize: { $sum: { $strLenBytes: { $ifNull: ['$content', ''] } } },
+            },
+        },
+    ]);
+    return result.length > 0 ? { count: result[0].count, size: result[0].totalSize } : { count: 0, size: 0 };
 };
 
 const Note = mongoose.model<INoteDocument, INoteModel>('Note', noteSchema);
